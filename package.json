@@ -1,0 +1,41 @@
+{
+  "name": "@adviewmx/floating-whatsapp",
+  "version": "1.0.0",
+  "description": "Botón flotante de WhatsApp como Web Component nativo (<floating-whatsapp>). Vanilla JS, sin dependencias, encapsulado con Shadow DOM.",
+  "main": "floating-whatsapp.js",
+  "module": "floating-whatsapp.js",
+  "unpkg": "floating-whatsapp.js",
+  "jsdelivr": "floating-whatsapp.js",
+  "type": "module",
+  "files": [
+    "floating-whatsapp.js",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "echo \"No hay tests todavía\" && exit 0"
+  },
+  "keywords": [
+    "whatsapp",
+    "web-component",
+    "custom-element",
+    "shadow-dom",
+    "floating-button",
+    "vanilla-js",
+    "wordpress",
+    "elementor"
+  ],
+  "author": "Adview <mata@adview.mx>",
+  "license": "MIT",
+  "homepage": "https://github.com/adviewmx/whatsapp-webcomponent#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adviewmx/whatsapp-webcomponent.git"
+  },
+  "bugs": {
+    "url": "https://github.com/adviewmx/whatsapp-webcomponent/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
