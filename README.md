@@ -76,6 +76,7 @@ Una vez cargado el script, basta con declarar el elemento. Solo `phone` es oblig
   right="20"
   left=""
   size="60"
+  z-index="9999"
   event-name="adw_click_whatsapp">
 </floating-whatsapp>
 ```
@@ -93,13 +94,14 @@ Una vez cargado el script, basta con declarar el elemento. Solo `phone` es oblig
 | `right`       | number   | `20`                  | Distancia desde la derecha. Se ignora si se define `left`.         |
 | `left`        | number   | _(vacío)_             | Distancia desde la izquierda. **Tiene prioridad sobre `right`.**   |
 | `size`        | number   | `60`                  | Tamaño (ancho y alto) del botón.                                   |
+| `z-index`     | number   | `9999`                | Orden de apilamiento del botón. Súbelo si queda detrás de otros elementos. |
 | `event-name`  | string   | `adw_click_whatsapp`  | Nombre del evento enviado a Google Analytics (gtag).               |
 
 > 💡 Los valores numéricos aceptan unidades explícitas (`size="4rem"`, `bottom="5vh"`). Sin unidad se asume `px`.
 
 ### 🧭 Posicionamiento
 
-- El botón siempre usa `position: fixed` y `z-index: 9999`.
+- El botón siempre usa `position: fixed`. El `z-index` por defecto es `9999` y se ajusta con el atributo `z-index`.
 - Si defines `left`, el botón se ancla a la izquierda (`right` se ignora).
 - Si **no** defines `left`, se usa `right`.
 

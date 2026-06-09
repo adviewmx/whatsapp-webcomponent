@@ -58,6 +58,7 @@
     right: '20',
     left: '',
     size: '60',
+    zIndex: '9999',
     eventName: 'adw_click_whatsapp'
   };
 
@@ -80,6 +81,7 @@
         'right',
         'left',
         'size',
+        'z-index',
         'event-name'
       ];
     }
@@ -160,6 +162,7 @@
         right: get('right', DEFAULTS.right),
         left: this.getAttribute('left'), // puede ser null o '' a propósito
         size: get('size', DEFAULTS.size),
+        zIndex: get('z-index', DEFAULTS.zIndex),
         eventName: get('event-name', DEFAULTS.eventName)
       };
     }
@@ -236,6 +239,7 @@
       s.setProperty('--fw-bg', cfg.bgColor);
       s.setProperty('--fw-icon', cfg.iconColor);
       s.setProperty('--fw-size', this._toPx(cfg.size));
+      s.setProperty('--fw-zindex', cfg.zIndex);
       s.setProperty('--fw-bottom', this._toPx(cfg.bottom));
 
       if (hasLeft) {
@@ -352,6 +356,7 @@
         '  --fw-bg: ' + DEFAULTS.bgColor + ';',
         '  --fw-icon: ' + DEFAULTS.iconColor + ';',
         '  --fw-size: 60px;',
+        '  --fw-zindex: 9999;',
         '  --fw-bottom: 20px;',
         '  --fw-right: 20px;',
         '  --fw-left: auto;',
@@ -360,7 +365,7 @@
         ':host([hidden]) { display: none; }',
         '.fw-btn {',
         '  position: fixed;',
-        '  z-index: 9999;',
+        '  z-index: var(--fw-zindex);',
         '  bottom: var(--fw-bottom);',
         '  right: var(--fw-right);',
         '  left: var(--fw-left);',
