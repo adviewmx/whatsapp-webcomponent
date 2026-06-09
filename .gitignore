@@ -1,0 +1,12 @@
+# Carpeta de trabajo / notas internas (no se publica al repo)
+src/
+
+# Config local de Claude Code
+.claude/
+
+# Dependencias
+node_modules/
+
+# Logs y temporales
+*.log
+.DS_Store
