@@ -38,7 +38,7 @@ Descarga [`floating-whatsapp.js`](floating-whatsapp.js) y cárgalo en tu página
 **Recomendada para producción** — versión fijada (inmutable, no cambia bajo tus pies):
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/adviewmx/whatsapp-webcomponent@1.0.0/floating-whatsapp.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/adviewmx/whatsapp-webcomponent@1.0.1/floating-whatsapp.js" defer></script>
 ```
 
 Otras opciones según cuánto quieras auto-actualizar:
@@ -51,9 +51,12 @@ Otras opciones según cuánto quieras auto-actualizar:
 <script src="https://cdn.jsdelivr.net/gh/adviewmx/whatsapp-webcomponent@latest/floating-whatsapp.js" defer></script>
 ```
 
-> 💡 **Para sitios de clientes usa la versión fijada** (`@1.0.0`). Las URLs auto-actualizables
+> 💡 **Para sitios de clientes usa la versión fijada** (`@1.0.1`). Las URLs auto-actualizables
 > son cómodas, pero un release con un bug podría afectar a todos los sitios a la vez. Fijar la
 > versión te da control sobre cuándo actualizas.
+>
+> ⚠️ No uses `@1.0.0`: jsDelivr la fijó a un commit anterior y no refleja los últimos cambios.
+> La primera versión válida en CDN es `@1.0.1`.
 
 ---
 
