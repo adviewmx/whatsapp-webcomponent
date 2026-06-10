@@ -1,6 +1,6 @@
 {
   "name": "@adviewmx/floating-whatsapp",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Botón flotante de WhatsApp como Web Component nativo (<floating-whatsapp>). Vanilla JS, sin dependencias, encapsulado con Shadow DOM.",
   "main": "floating-whatsapp.js",
   "module": "floating-whatsapp.js",
