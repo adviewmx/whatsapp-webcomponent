@@ -96,6 +96,10 @@ Una vez cargado el script, basta con declarar el elemento. Solo `phone` es oblig
 | `size`        | number   | `60`                  | Tamaño (ancho y alto) del botón.                                   |
 | `z-index`     | number   | `9999`                | Orden de apilamiento del botón. Súbelo si queda detrás de otros elementos. |
 | `event-name`  | string   | `adw_click_whatsapp`  | Nombre del evento enviado a Google Analytics (gtag).               |
+| `send-phone`  | boolean  | `false`               | Si es `true`, incluye el `phone_number` en los eventos de analítica. Por defecto el teléfono **no** se envía. |
+| `meta-event`  | string   | `Contact`             | Nombre del evento del Meta Pixel. Si es estándar se envía con `fbq('track', …)`; si es personalizado, con `fbq('trackCustom', …)`. |
+| `analytics-send-to` | string | _(vacío)_           | `send_to` de gtag: enruta el evento a un destino concreto (`G-XXXX`, `AW-XXXX/label` o grupo). Si se omite, va a **todos** los destinos gtag. |
+| `meta-pixel-id` | string | _(vacío)_             | Dirige el evento de Meta **solo** a ese pixel (`trackSingle`/`trackSingleCustom`). Útil con varios pixeles. Si se omite, va a **todos**. |
 
 > 💡 Los valores numéricos aceptan unidades explícitas (`size="4rem"`, `bottom="5vh"`). Sin unidad se asume `px`.
 
@@ -109,21 +113,23 @@ Una vez cargado el script, basta con declarar el elemento. Solo `phone` es oblig
 
 ## 📊 Tracking de eventos
 
-Al hacer click, el componente dispara automáticamente los siguientes eventos **solo si la herramienta existe** en la página:
+Al hacer click, el componente dispara automáticamente los siguientes eventos **solo si la herramienta existe** en la página. El campo `phone_number` se incluye **únicamente** si defines `send-phone="true"` (por defecto no se envía):
 
-**Google Analytics (gtag.js)**
+**Google Analytics (gtag.js)** — con `analytics-send-to` se añade `send_to` para enrutar a un destino concreto:
 ```js
-gtag("event", eventName, { phone_number: phone });
+gtag("event", eventName, { /* phone_number: phone (send-phone), send_to: id (analytics-send-to) */ });
 ```
 
-**Meta Pixel (fbq)**
+**Meta Pixel (fbq)** — el evento es `Contact` por defecto, configurable con `meta-event`:
 ```js
-fbq("track", "Contact", { content_name: "whatsapp", phone_number: phone });
+fbq("track", "Contact", { content_name: "whatsapp" /* , phone_number: phone */ });
+// Si meta-event no es un evento estándar de Meta, se usa fbq("trackCustom", …).
+// Con meta-pixel-id se usa fbq("trackSingle"/"trackSingleCustom", pixelId, …) para dirigirlo a un solo pixel.
 ```
 
 **Google Tag Manager (dataLayer)**
 ```js
-window.dataLayer.push({ event: "whatsapp_click", phone_number: phone });
+window.dataLayer.push({ event: "whatsapp_click" /* , phone_number: phone */ });
 ```
 
 Además emite un evento DOM personalizado por si quieres reaccionar desde tu propio código:
@@ -131,7 +137,7 @@ Además emite un evento DOM personalizado por si quieres reaccionar desde tu pro
 ```js
 document.querySelector('floating-whatsapp')
   .addEventListener('whatsapp:click', function (e) {
-    console.log(e.detail); // { phone, eventName }
+    console.log(e.detail); // { phone, eventName, sendPhone }
   });
 ```
 
@@ -224,7 +230,9 @@ El componente trae gtag, Meta Pixel y GTM de fábrica. Para **cualquier otra pla
 // TikTok Pixel
 document.addEventListener('whatsapp:click', function (e) {
   if (window.ttq) {
-    ttq.track('Contact', { content_name: 'whatsapp', phone: e.detail.phone });
+    var params = { content_name: 'whatsapp' };
+    if (e.detail.sendPhone) { params.phone = e.detail.phone; } // respeta send-phone
+    ttq.track('Contact', params);
   }
 });
 
@@ -236,7 +244,7 @@ document.addEventListener('whatsapp:click', function () {
 });
 ```
 
-El `detail` del evento incluye `{ phone, eventName }`.
+El `detail` del evento incluye `{ phone, eventName, sendPhone }`.
 
 ### Estilos finos (`::part`)
 

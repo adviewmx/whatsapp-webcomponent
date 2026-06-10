@@ -7,6 +7,9 @@ src/
 # Dependencias
 node_modules/
 
+# Banco de pruebas local del tracking (no se publica)
+test.html
+
 # Logs y temporales
 *.log
 .DS_Store

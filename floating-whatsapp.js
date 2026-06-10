@@ -59,8 +59,25 @@
     left: '',
     size: '60',
     zIndex: '9999',
-    eventName: 'adw_click_whatsapp'
+    eventName: 'adw_click_whatsapp',
+    sendPhone: false,
+    metaEvent: 'Contact',
+    gaSendTo: '',
+    metaPixelId: ''
   };
+
+  /**
+   * Eventos estándar del pixel de Meta. Si `meta-event` es uno de estos se
+   * envía con `fbq('track', …)`; cualquier otro nombre se considera evento
+   * personalizado y se envía con `fbq('trackCustom', …)`.
+   * @type {string[]}
+   */
+  var META_STANDARD_EVENTS = [
+    'AddPaymentInfo', 'AddToCart', 'AddToWishlist', 'CompleteRegistration',
+    'Contact', 'CustomizeProduct', 'Donate', 'FindLocation', 'InitiateCheckout',
+    'Lead', 'Purchase', 'Schedule', 'Search', 'StartTrial', 'SubmitApplication',
+    'Subscribe', 'ViewContent', 'PageView'
+  ];
 
   /**
    * Web Component del botón flotante de WhatsApp.
@@ -146,12 +163,23 @@
     /**
      * Lee y normaliza la configuración a partir de los atributos HTML,
      * aplicando valores por defecto cuando faltan.
-     * @returns {{phone:string,bgColor:string,iconColor:string,bottom:string,right:string,left:string,size:string,eventName:string}}
+     * @returns {{phone:string,bgColor:string,iconColor:string,bottom:string,right:string,left:string,size:string,zIndex:string,eventName:string,sendPhone:boolean,metaEvent:string,gaSendTo:string,metaPixelId:string}}
      */
     getConfig() {
       var get = function (attr, fallback) {
         var v = this.getAttribute(attr);
         return v === null || v.trim() === '' ? fallback : v.trim();
+      }.bind(this);
+
+      // Atributo booleano: ausente => fallback. Presente sin valor o con
+      // 'true'/'1'/'yes' => true. Cualquier otro valor ('false', '0'…) => false.
+      var getBool = function (attr, fallback) {
+        var v = this.getAttribute(attr);
+        if (v === null) {
+          return fallback;
+        }
+        v = v.trim().toLowerCase();
+        return v === '' || v === 'true' || v === '1' || v === 'yes';
       }.bind(this);
 
       return {
@@ -163,7 +191,11 @@
         left: this.getAttribute('left'), // puede ser null o '' a propósito
         size: get('size', DEFAULTS.size),
         zIndex: get('z-index', DEFAULTS.zIndex),
-        eventName: get('event-name', DEFAULTS.eventName)
+        eventName: get('event-name', DEFAULTS.eventName),
+        sendPhone: getBool('send-phone', DEFAULTS.sendPhone),
+        metaEvent: get('meta-event', DEFAULTS.metaEvent),
+        gaSendTo: get('analytics-send-to', DEFAULTS.gaSendTo),
+        metaPixelId: get('meta-pixel-id', DEFAULTS.metaPixelId)
       };
     }
 
@@ -283,7 +315,11 @@
         new CustomEvent('whatsapp:click', {
           bubbles: true,
           composed: true,
-          detail: { phone: cfg.phone, eventName: cfg.eventName }
+          detail: {
+            phone: cfg.phone,
+            eventName: cfg.eventName,
+            sendPhone: cfg.sendPhone
+          }
         })
       );
     }
@@ -299,7 +335,16 @@
       // Google Analytics (gtag)
       try {
         if (typeof window.gtag === 'function') {
-          window.gtag('event', cfg.eventName, { phone_number: cfg.phone });
+          var gaParams = {};
+          if (cfg.sendPhone) {
+            gaParams.phone_number = cfg.phone;
+          }
+          // Enruta el evento a un destino concreto (Measurement ID, conversión
+          // AW-…/label o grupo de envío). Sin esto, va a todos los destinos.
+          if (cfg.gaSendTo) {
+            gaParams.send_to = cfg.gaSendTo;
+          }
+          window.gtag('event', cfg.eventName, gaParams);
         }
       } catch (e) {
         /* noop */
@@ -308,10 +353,24 @@
       // Meta Pixel (fbq)
       try {
         if (typeof window.fbq === 'function') {
-          window.fbq('track', 'Contact', {
-            content_name: 'whatsapp',
-            phone_number: cfg.phone
-          });
+          var fbParams = { content_name: 'whatsapp' };
+          if (cfg.sendPhone) {
+            fbParams.phone_number = cfg.phone;
+          }
+          // Evento estándar => 'track'; personalizado => 'trackCustom'.
+          var isStd = META_STANDARD_EVENTS.indexOf(cfg.metaEvent) !== -1;
+          if (cfg.metaPixelId) {
+            // Dirige el evento SOLO a ese pixel (útil con varios en la página).
+            window.fbq(
+              isStd ? 'trackSingle' : 'trackSingleCustom',
+              cfg.metaPixelId,
+              cfg.metaEvent,
+              fbParams
+            );
+          } else {
+            // Comportamiento por defecto: a todos los pixeles inicializados.
+            window.fbq(isStd ? 'track' : 'trackCustom', cfg.metaEvent, fbParams);
+          }
         }
       } catch (e) {
         /* noop */
@@ -320,10 +379,11 @@
       // Google Tag Manager (dataLayer)
       try {
         if (window.dataLayer && typeof window.dataLayer.push === 'function') {
-          window.dataLayer.push({
-            event: 'whatsapp_click',
-            phone_number: cfg.phone
-          });
+          var dlEvent = { event: 'whatsapp_click' };
+          if (cfg.sendPhone) {
+            dlEvent.phone_number = cfg.phone;
+          }
+          window.dataLayer.push(dlEvent);
         }
       } catch (e) {
         /* noop */
