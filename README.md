@@ -80,7 +80,7 @@ Una vez cargado el script, basta con declarar el elemento. Solo `phone` es oblig
   left=""
   size="60"
   z-index="9999"
-  event-name="adw_click_whatsapp">
+  event-name="click_whatsapp">
 </floating-whatsapp>
 ```
 
@@ -98,7 +98,7 @@ Una vez cargado el script, basta con declarar el elemento. Solo `phone` es oblig
 | `left`        | number   | _(vacío)_             | Distancia desde la izquierda. **Tiene prioridad sobre `right`.**   |
 | `size`        | number   | `60`                  | Tamaño (ancho y alto) del botón.                                   |
 | `z-index`     | number   | `9999`                | Orden de apilamiento del botón. Súbelo si queda detrás de otros elementos. |
-| `event-name`  | string   | `adw_click_whatsapp`  | Nombre del evento enviado a Google Analytics (gtag).               |
+| `event-name`  | string   | `click_whatsapp`      | Nombre del evento enviado a Google Analytics (gtag).               |
 | `send-phone`  | boolean  | `false`               | Si es `true`, incluye el `phone_number` en los eventos de analítica. Por defecto el teléfono **no** se envía. |
 | `meta-event`  | string   | `Contact`             | Nombre del evento del Meta Pixel. Si es estándar se envía con `fbq('track', …)`; si es personalizado, con `fbq('trackCustom', …)`. |
 | `analytics-send-to` | string | _(vacío)_           | `send_to` de gtag: enruta el evento a un destino concreto (`G-XXXX`, `AW-XXXX/label` o grupo). Si se omite, va a **todos** los destinos gtag. |

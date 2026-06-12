@@ -59,7 +59,7 @@
     left: '',
     size: '60',
     zIndex: '9999',
-    eventName: 'adw_click_whatsapp',
+    eventName: 'click_whatsapp',
     sendPhone: false,
     metaEvent: 'Contact',
     gaSendTo: '',
