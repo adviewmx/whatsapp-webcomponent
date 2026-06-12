@@ -1,11 +1,11 @@
-# 💬 floating-whatsapp
+# 💬 float-whats
 
-Botón flotante de WhatsApp como **Web Component nativo** (`<floating-whatsapp>`).
+Botón flotante de WhatsApp como **Web Component nativo** (`<float-whats>`).
 
 Vanilla JavaScript puro, **sin dependencias**, encapsulado con **Shadow DOM** y listo para producción. Compatible con **WordPress, Elementor y sitios HTML estáticos**.
 
 ```html
-<floating-whatsapp phone="523300000000"></floating-whatsapp>
+<float-whats phone="523300000000"></float-whats>
 ```
 
 ---
@@ -27,10 +27,10 @@ Vanilla JavaScript puro, **sin dependencias**, encapsulado con **Shadow DOM** y 
 
 ### Opción A — Descarga directa
 
-Descarga [`floating-whatsapp.js`](floating-whatsapp.js) y cárgalo en tu página:
+Descarga [`float-whats.js`](float-whats.js) y cárgalo en tu página:
 
 ```html
-<script src="floating-whatsapp.js" defer></script>
+<script src="float-whats.js" defer></script>
 ```
 
 ### Opción B — CDN (jsDelivr vía GitHub)
@@ -38,17 +38,17 @@ Descarga [`floating-whatsapp.js`](floating-whatsapp.js) y cárgalo en tu página
 **Recomendada para producción** — versión fijada (inmutable, no cambia bajo tus pies):
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/adviewmx/wa-button@1.0.0/floating-whatsapp.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/adviewmx/float-whats@1.0.0/float-whats.min.js" defer></script>
 ```
 
 Otras opciones según cuánto quieras auto-actualizar:
 
 ```html
 <!-- Auto-parches dentro de la v1 (recibe 1.x.x, pero nunca un v2 que rompa) -->
-<script src="https://cdn.jsdelivr.net/gh/adviewmx/wa-button@1/floating-whatsapp.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/adviewmx/float-whats@1/float-whats.min.js" defer></script>
 
 <!-- Siempre la última versión publicada — cómodo, pero puede cambiar sin aviso -->
-<script src="https://cdn.jsdelivr.net/gh/adviewmx/wa-button@latest/floating-whatsapp.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/adviewmx/float-whats@latest/float-whats.min.js" defer></script>
 ```
 
 > 💡 **Para sitios de clientes usa la versión fijada** (`@1.0.0`). Las URLs auto-actualizables
@@ -62,13 +62,13 @@ Otras opciones según cuánto quieras auto-actualizar:
 Una vez cargado el script, basta con declarar el elemento. Solo `phone` es obligatorio:
 
 ```html
-<floating-whatsapp phone="523300000000"></floating-whatsapp>
+<float-whats phone="523300000000"></float-whats>
 ```
 
 ### Configuración completa
 
 ```html
-<floating-whatsapp
+<float-whats
   phone="523300000000"
   bg-color="#25D366"
   icon-color="#FFFFFF"
@@ -78,7 +78,7 @@ Una vez cargado el script, basta con declarar el elemento. Solo `phone` es oblig
   size="60"
   z-index="9999"
   event-name="click_whatsapp">
-</floating-whatsapp>
+</float-whats>
 ```
 
 ---
@@ -135,8 +135,8 @@ window.dataLayer.push({ event: "whatsapp_click" /* , phone_number: phone */ });
 Además emite un evento DOM personalizado por si quieres reaccionar desde tu propio código:
 
 ```js
-document.querySelector('floating-whatsapp')
-  .addEventListener('whatsapp:click', function (e) {
+document.querySelector('float-whats')
+  .addEventListener('float-whats:click', function (e) {
     console.log(e.detail); // { phone, eventName, sendPhone }
   });
 ```
@@ -151,24 +151,24 @@ document.querySelector('floating-whatsapp')
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <script src="floating-whatsapp.js" defer></script>
+  <script src="float-whats.js" defer></script>
 </head>
 <body>
-  <floating-whatsapp phone="523300000000"></floating-whatsapp>
+  <float-whats phone="523300000000"></float-whats>
 </body>
 </html>
 ```
 
 ### WordPress
 
-1. Sube `floating-whatsapp.js` a tu tema (ej. `/wp-content/themes/tu-tema/js/`).
+1. Sube `float-whats.js` a tu tema (ej. `/wp-content/themes/tu-tema/js/`).
 2. Encólalo desde `functions.php`:
 
 ```php
 add_action('wp_enqueue_scripts', function () {
   wp_enqueue_script(
-    'floating-whatsapp',
-    get_template_directory_uri() . '/js/floating-whatsapp.js',
+    'float-whats',
+    get_template_directory_uri() . '/js/float-whats.js',
     [],
     '1.0.0',
     true // en el footer
@@ -179,7 +179,7 @@ add_action('wp_enqueue_scripts', function () {
 3. Inserta el elemento en tu plantilla (`footer.php`) o en un bloque HTML personalizado:
 
 ```html
-<floating-whatsapp phone="523300000000"></floating-whatsapp>
+<float-whats phone="523300000000"></float-whats>
 ```
 
 ### Elementor
@@ -188,7 +188,7 @@ add_action('wp_enqueue_scripts', function () {
 2. Arrastra un widget **HTML** a tu página y pega:
 
 ```html
-<floating-whatsapp phone="523300000000" bg-color="#25D366"></floating-whatsapp>
+<float-whats phone="523300000000" bg-color="#25D366"></float-whats>
 ```
 
 > El componente incluye una guarda para no registrarse dos veces, evitando errores si Elementor inyecta el script más de una vez.
@@ -197,7 +197,7 @@ add_action('wp_enqueue_scripts', function () {
 
 ## 🧩 Extender / personalizar
 
-El componente está **cerrado a modificación pero abierto a extensión**: nunca necesitas editar `floating-whatsapp.js`. Todo se personaliza desde fuera, así puedes seguir actualizando la librería (p. ej. vía CDN) sin perder tus cambios.
+El componente está **cerrado a modificación pero abierto a extensión**: nunca necesitas editar `float-whats.js`. Todo se personaliza desde fuera, así puedes seguir actualizando la librería (p. ej. vía CDN) sin perder tus cambios.
 
 ### Icono personalizado (`<slot name="icon">`)
 
@@ -205,30 +205,30 @@ Por defecto se muestra el icono de WhatsApp embebido. Para usar el tuyo, pásalo
 
 ```html
 <!-- Icono por defecto -->
-<floating-whatsapp phone="523326507207"></floating-whatsapp>
+<float-whats phone="523326507207"></float-whats>
 
 <!-- SVG propio -->
-<floating-whatsapp phone="523326507207">
+<float-whats phone="523326507207">
   <svg slot="icon" viewBox="0 0 24 24">
     <path d="M12 2 2 22h20L12 2z" />
   </svg>
-</floating-whatsapp>
+</float-whats>
 
 <!-- También funciona con una imagen -->
-<floating-whatsapp phone="523326507207">
+<float-whats phone="523326507207">
   <img slot="icon" src="mi-icono.png" alt="" />
-</floating-whatsapp>
+</float-whats>
 ```
 
 > Un `<svg>` que use `fill="currentColor"` heredará automáticamente el color de `icon-color`.
 
 ### Tracking adicional (TikTok, LinkedIn, etc.)
 
-El componente trae gtag, Meta Pixel y GTM de fábrica. Para **cualquier otra plataforma**, escucha el evento `whatsapp:click` que emite el componente (burbujea y atraviesa el Shadow DOM). No hay que tocar la librería:
+El componente trae gtag, Meta Pixel y GTM de fábrica. Para **cualquier otra plataforma**, escucha el evento `float-whats:click` que emite el componente (burbujea y atraviesa el Shadow DOM). No hay que tocar la librería:
 
 ```js
 // TikTok Pixel
-document.addEventListener('whatsapp:click', function (e) {
+document.addEventListener('float-whats:click', function (e) {
   if (window.ttq) {
     var params = { content_name: 'whatsapp' };
     if (e.detail.sendPhone) { params.phone = e.detail.phone; } // respeta send-phone
@@ -237,7 +237,7 @@ document.addEventListener('whatsapp:click', function (e) {
 });
 
 // LinkedIn Insight Tag
-document.addEventListener('whatsapp:click', function () {
+document.addEventListener('float-whats:click', function () {
   if (window.lintrk) {
     window.lintrk('track', { conversion_id: 1234567 });
   }
@@ -251,7 +251,7 @@ El `detail` del evento incluye `{ phone, eventName, sendPhone }`.
 El botón se expone como `part="button"`, así que puedes estilizarlo desde el CSS de tu sitio aunque viva dentro del Shadow DOM:
 
 ```css
-floating-whatsapp::part(button) {
+float-whats::part(button) {
   box-shadow: 0 0 0 4px rgba(37, 211, 102, 0.3);
 }
 ```
@@ -261,7 +261,7 @@ floating-whatsapp::part(button) {
 Como es una clase nativa, puedes extenderla y registrar tu propia variante:
 
 ```js
-class WhatsappConSaludo extends FloatingWhatsapp {
+class WhatsappConSaludo extends FloatWhats {
   getConfig() {
     const cfg = super.getConfig();
     // ...tu lógica extra
@@ -275,10 +275,10 @@ customElements.define('whatsapp-saludo', WhatsappConSaludo);
 
 | Necesidad | Mecanismo | ¿Editar la librería? |
 |---|---|---|
-| Otro tracking (TikTok, LinkedIn…) | Escuchar `whatsapp:click` | ❌ No |
+| Otro tracking (TikTok, LinkedIn…) | Escuchar `float-whats:click` | ❌ No |
 | Icono distinto | `<slot name="icon">` | ❌ No |
 | Ajustar sombra/animación | `::part(button)` | ❌ No |
-| Cambiar comportamiento | `extends FloatingWhatsapp` | ❌ No |
+| Cambiar comportamiento | `extends FloatWhats` | ❌ No |
 
 ---
 
@@ -287,7 +287,7 @@ customElements.define('whatsapp-saludo', WhatsappConSaludo);
 El componente observa sus atributos y se actualiza solo. Puedes modificarlo por JavaScript en cualquier momento:
 
 ```js
-const btn = document.querySelector('floating-whatsapp');
+const btn = document.querySelector('float-whats');
 btn.setAttribute('bg-color', '#075E54');
 btn.setAttribute('phone', '523300000000');
 ```

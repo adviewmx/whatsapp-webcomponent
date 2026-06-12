@@ -1,15 +1,15 @@
 /**
- * floating-whatsapp.js
+ * float-whats.js
  * -----------------------------------------------------------------------------
- * <floating-whatsapp> — Botón flotante de WhatsApp como Web Component nativo.
+ * <float-whats> — Botón flotante de WhatsApp como Web Component nativo.
  *
  * Vanilla JS puro, sin dependencias. Compatible con WordPress, Elementor y
  * sitios HTML estáticos. Todo el estilo vive aislado dentro de un Shadow DOM,
  * por lo que puede usarse múltiples veces en la misma página sin colisiones.
  *
  * Uso:
- *   <script src="floating-whatsapp.js" defer></script>
- *   <floating-whatsapp phone="523326507207"></floating-whatsapp>
+ *   <script src="float-whats.js" defer></script>
+ *   <float-whats phone="523326507207"></float-whats>
  *
  * @author  Javi Mata
  * @license MIT
@@ -19,7 +19,7 @@
 
   // Evita re-registrar el elemento si el script se carga más de una vez
   // (común en builders como Elementor que pueden inyectar scripts dos veces).
-  if (customElements.get('floating-whatsapp')) {
+  if (customElements.get('float-whats')) {
     return;
   }
 
@@ -83,10 +83,10 @@
    * Web Component del botón flotante de WhatsApp.
    * @extends HTMLElement
    */
-  class FloatingWhatsapp extends HTMLElement {
+  class FloatWhats extends HTMLElement {
     /**
      * Atributos observados: cualquier cambio en ellos dispara
-     * {@link FloatingWhatsapp#attributeChangedCallback}.
+     * {@link FloatWhats#attributeChangedCallback}.
      * @returns {string[]}
      */
     static get observedAttributes() {
@@ -312,7 +312,7 @@
 
       // Emite un evento DOM componible por si el sitio quiere reaccionar.
       this.dispatchEvent(
-        new CustomEvent('whatsapp:click', {
+        new CustomEvent('float-whats:click', {
           bubbles: true,
           composed: true,
           detail: {
@@ -492,8 +492,8 @@
   }
 
   // Registro del Custom Element.
-  customElements.define('floating-whatsapp', FloatingWhatsapp);
+  customElements.define('float-whats', FloatWhats);
 
   // Exponer la clase por si se necesita extender o instanciar programáticamente.
-  window.FloatingWhatsapp = FloatingWhatsapp;
+  window.FloatWhats = FloatWhats;
 })();

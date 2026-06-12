@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Demo · &lt;floating-whatsapp&gt;</title>
+  <title>Demo · &lt;float-whats&gt;</title>
 
   <!-- Carga del Web Component. `defer` para no bloquear el render. -->
-  <script src="floating-whatsapp.js" defer></script>
+  <script src="float-whats.js" defer></script>
 
   <style>
     body {
@@ -26,14 +26,14 @@
   </style>
 </head>
 <body>
-  <h1>Demo del componente &lt;floating-whatsapp&gt;</h1>
+  <h1>Demo del componente &lt;float-whats&gt;</h1>
   <p>Desplázate: los botones permanecen fijos gracias a <code>position: fixed</code>.</p>
 
   <!-- 1) Uso básico: solo el teléfono. Toma todos los valores por defecto. -->
-  <floating-whatsapp phone="523300000000"></floating-whatsapp>
+  <float-whats phone="523300000000"></float-whats>
 
   <!-- 2) Configuración completa, anclado a la derecha. -->
-  <floating-whatsapp
+  <float-whats
     phone="523300000000"
     bg-color="#25D366"
     icon-color="#FFFFFF"
@@ -41,10 +41,10 @@
     right="20"
     size="60"
     event-name="click_whatsapp">
-  </floating-whatsapp>
+  </float-whats>
 
   <!-- 3) Segunda instancia anclada a la IZQUIERDA (left tiene prioridad sobre right). -->
-  <floating-whatsapp
+  <float-whats
     phone="523300000000"
     bg-color="#128C7E"
     icon-color="#FFFFFF"
@@ -52,17 +52,17 @@
     left="20"
     size="50"
     event-name="click_whatsapp_left">
-  </floating-whatsapp>
+  </float-whats>
 
   <div class="spacer"></div>
 
   <!-- Ejemplo de cambio dinámico de atributos (reactivo vía attributeChangedCallback). -->
   <script>
     window.addEventListener('load', function () {
-      var btns = document.querySelectorAll('floating-whatsapp');
+      var btns = document.querySelectorAll('float-whats');
       // Escucha el evento personalizado que emite el componente al hacer click.
       btns.forEach(function (el) {
-        el.addEventListener('whatsapp:click', function (e) {
+        el.addEventListener('float-whats:click', function (e) {
           console.log('Click en WhatsApp →', e.detail);
         });
       });
