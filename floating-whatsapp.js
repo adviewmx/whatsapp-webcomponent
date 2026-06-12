@@ -11,7 +11,7 @@
  *   <script src="floating-whatsapp.js" defer></script>
  *   <floating-whatsapp phone="523326507207"></floating-whatsapp>
  *
- * @author  AdView
+ * @author  Javi Mata
  * @license MIT
  */
 (function () {
